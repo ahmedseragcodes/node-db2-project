@@ -1,5 +1,7 @@
 const express = require("express");
 const Cars = require("./cars-model");
+const mw = require("./cars-middleware");
+const { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique } = mw;
 
 const router = express.Router();
 
@@ -20,7 +22,7 @@ router.get("/", (req, res, next)=>{
 
 //[GET] Car By ID
 
-router.get("/:id", (req, res, next)=>{
+router.get("/:id", checkCarId, (req, res, next)=>{
     
     const { id }=req.params;
 
@@ -36,7 +38,7 @@ router.get("/:id", (req, res, next)=>{
 });
 
 //[POST] New Car
-router.post("/", (req, res, next)=>{
+router.post("/", checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next)=>{
 
     const newCar = req.body;
 

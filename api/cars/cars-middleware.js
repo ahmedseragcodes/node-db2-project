@@ -49,14 +49,17 @@ const checkVinNumberUnique = (req, res, next) => {
   const vinToCheck = req.body.vin;
   if (vinToCheck){
     Cars.getAll()
-    .then((resolvedCars)=>{
-      resolvedCars.data.filter((car)=>{
-        return car.vin === vinToCheck ? res.status(400).json({message: `vin ${vinToCheck} already exists`}) : next(); 
+    .then((allCars)=>{
+      allCars.filter((car)=>{
+        if (car.vin === vinToCheck){
+          res.status(400).json({message: `vin ${vinToCheck} already exists`})
+        }
       })
     })
     .catch((err)=>{
-      res.status(500).json({message: "Failed to get all cars"});
+      res.status(500).json({message: err.message});
     })
+    next()
   } else {
     res.status(400).json({message: "Vin is missing"});
   }
