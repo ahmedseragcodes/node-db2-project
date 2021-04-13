@@ -14,7 +14,8 @@ router.get("/", (req, res, next)=>{
     })
     .catch((err)=>{
         console.log("FAILED TO GET ALL CARS", err);
-    })
+        next(err);
+    });
 });
 
 //[GET] Car By ID
@@ -30,6 +31,24 @@ router.get("/:id", (req, res, next)=>{
     })
     .catch((err)=>{
         console.log("FAILED TO GET A CAR BY ID", err);
+        next(err);
+    });
+});
+
+//[POST] New Car
+router.post("/", (req, res, next)=>{
+
+    const newCar = req.body;
+
+
+    Cars.create(newCar)
+    .then((car)=>{
+        console.log("SUCCEEDED POSTING NEW CAR", car);
+        res.status(200).json(car);
+    })
+    .catch((err)=>{
+        console.log("FAILED TO POST NEW CAR", err);
+        next(err);
     });
 });
 
