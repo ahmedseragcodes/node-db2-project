@@ -5,7 +5,7 @@ const { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique }
 const router = express.Router();
 
 
-/ENDPOINTS
+//ENDPOINTS
 
 //[GET] All Cars
 router.get("/", (req, res, next)=>{
