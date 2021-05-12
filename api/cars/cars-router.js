@@ -37,6 +37,20 @@ router.get("/:id", checkCarId, (req, res, next)=>{
     });
 });
 
+//[GET] By Vin
+router.get("/vins/:vin", (req, res, next)=>{
+    
+    const { vin } = req.params;
+    
+    Cars.getByVin(vin)
+    .then((specificVehicle)=>{
+        res.status(200).json(specificVehicle);
+    })
+    .catch((err)=>{
+        res.status(500).json({message: err.message});
+    })
+})
+
 //[POST] New Car
 router.post("/", checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next)=>{
 
