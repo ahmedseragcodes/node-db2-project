@@ -29,7 +29,7 @@ router.get("/:id", checkCarId, (req, res, next)=>{
     Cars.getById(id)
     .then((car)=>{
         console.log("SUCCEEDED GETTING A CAR BY ID", car);
-        res.status(200).json(car);
+        res.status(200).json(car[0]);
     })
     .catch((err)=>{
         console.log("FAILED TO GET A CAR BY ID", err);
@@ -67,5 +67,20 @@ router.post("/", checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (re
         next(err);
     });
 });
+
+//[DELETE] Car By Id
+
+router.delete("/:id", (req, res, next)=>{
+
+    const { id } = req.params;
+
+    Cars.remove(id)
+    .then((recordsDeleted)=>{
+        res.status(200).json(recordsDeleted);
+    })
+    .catch((err)=>{
+        res.status(500).json({message: err.message});
+    })
+})
 
 module.exports = router;

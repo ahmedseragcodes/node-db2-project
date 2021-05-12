@@ -47,20 +47,16 @@ const checkVinNumberValid = (req, res, next) => {
   
   const vinToValidate = req.body.vin;
 
-  if(vinToValidate){
     if(vinValidator.validate(vinToValidate)){
       next();
     } else {
       res.status(400).json({message: `vin ${vinToValidate} is invalid`})
     }
-  } else {
-    res.status(400).json({message: "vin is missing"});
-  }
 }
 
 const checkVinNumberUnique = (req, res, next) => {
   
-  const { vin } = req.params;
+  const vin  = req.body.vin;
 
   Cars.getByVin(vin)
   .then((specificVehicle)=>{

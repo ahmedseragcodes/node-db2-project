@@ -28,5 +28,12 @@ const create = async(newCar) => {
 
 };
 
+const remove = (id) =>{
 
-module.exports = { getAll, getById, getByVin, create }
+  return db("cars")
+          .where("id", id)
+          .del()
+}
+
+
+module.exports = { getAll, getById, getByVin, create, remove }
